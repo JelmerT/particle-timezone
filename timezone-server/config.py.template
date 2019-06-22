@@ -1,0 +1,4 @@
+# Duplicate this file and rename it to `config.py`
+# Then add your google maps API key here:
+
+maps_api_key = "<Google_Maps_API_Key_Here>"

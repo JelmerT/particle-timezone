@@ -1,0 +1,9 @@
+{
+    "event": "timezone",
+    "responseTopic": "hook-response/{{{PARTICLE_EVENT_NAME}}}/{{PARTICLE_DEVICE_ID}}",
+    "url": "https://<*****FILL-IN-YOUR-URL-HERE*****>/v1/timezone",
+    "requestType": "POST",
+    "noDefaults": true,
+    "rejectUnauthorized": true,
+    "json": "{\n\"event\":\"{{{PARTICLE_EVENT_NAME}}}\",\n\"data\":{{{PARTICLE_EVENT_VALUE}}},\n\"coreid\":\"{{{PARTICLE_DEVICE_ID}}}\",\n\"published_at\":\"{{{PARTICLE_PUBLISHED_AT}}}\"\n}"
+}
