@@ -1,4 +1,8 @@
-#config file holding keys
+# config file holding keys
 config.py
 
+# python stuff
 __pycache__
+
+# compiled firmware
+*.bin

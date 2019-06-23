@@ -60,10 +60,14 @@ manually.
 
 Timezone timezone;
 
-void setup() { timezone.begin(); }
+void setup() {
+  timezone.begin();
+}
 
-void loop() { if (Particle.connected() && !timezone.isValid())
-  timezone.request(); }
+void loop() {
+  if (Particle.connected() && !timezone.isValid())
+    timezone.request();
+}
 ```
 
 See the [examples](examples) folder for more details.
