@@ -103,7 +103,8 @@ timezone.withEventName("test/custom_timezone_event").begin();
 The timezone can be requested with:
 
 ```
-if (Particle.connected() && !timezone.isValid()) timezone.request();
+if (Particle.connected() && !timezone.isValid())
+	timezone.request();
 ```
 This will first check if the device is connected to the Particle cloud and if
 the timezone was not already set. Then the library will publish an event which
