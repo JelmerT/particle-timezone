@@ -12,7 +12,8 @@ static int numAdded = 0;
  * Constructor.
  */
 Timezone::Timezone(): utcOffset(0), rawOffset(0), dstOffset(0),
-	timezoneSet(false), eventName("timezone"){
+	timezoneSet(false), eventName("timezone"),
+	lastRequest(0), lastUpdate(0){
 
 }
 
@@ -49,6 +50,31 @@ bool Timezone::isValid()
 }
 
 /**
+ * return true if a timezone was received or if no connection to particle cloud
+ */
+bool Timezone::requestDone()
+{
+	return (!Particle.connected() || (this->lastUpdate > this->lastRequest));
+}
+
+/**
+ * return true if a timezone request is pending and there is a connection to the
+ * particle cloud
+ */
+bool Timezone::requestPending()
+{
+	return (Particle.connected() && (this->lastUpdate < this->lastRequest));
+}
+
+/**
+ * Get timestamp for last request
+ */
+unsigned long Timezone::requestedLast()
+{
+	return this->lastRequest;
+}
+
+/**
 * Example private method
 */
 bool Timezone::publishTimezoneLocation() {
@@ -61,7 +87,13 @@ bool Timezone::publishTimezoneLocation() {
 
 		if (Particle.connected()) {
 			Log.info("Getting timezone...");
-			return Particle.publish(eventName, scanData, PRIVATE);
+			if (Particle.publish(eventName, scanData, PRIVATE)){
+				this->lastRequest = millis();
+				return true;
+			} else {
+				Log.info("Getting timezone failed: Particle publish failed");
+				return false;
+			}
 		} else {
 			Log.info("Getting timezone failed: Not connected to Particle cloud");
 			return false;
@@ -161,6 +193,7 @@ void Timezone::subscriptionHandler(const char *event, const char *data) {
 		Time.beginDST();
 
   	this->timezoneSet = true;
+  	this->lastUpdate = millis();
 
   	Log.info("UTC offset: %.1f", this->utcOffset);
 

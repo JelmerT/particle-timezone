@@ -27,17 +27,32 @@ public:
   Timezone &withEventName(const char *name);
 
   /**
-   * Example method
+   * Timezone constructor, must be run first
    */
   void begin();
 
   /**
-   * Example method
+   * Request a timezone update
    */
   bool request();
 
   /**
-   * Example method
+   * return true if a timezone was received or if no connection to particle cloud
+   */
+  bool requestDone();
+
+  /**
+   * return true if a timezone request is pending
+   */
+  bool requestPending();
+
+  /**
+   * Get timestamp for last request
+   */
+  unsigned long requestedLast();
+
+  /**
+   * return true if timezone was set
    */
   bool isValid();
 
@@ -48,4 +63,6 @@ protected:
 
   bool timezoneSet;
   String eventName;
+  unsigned long lastRequest;
+  unsigned long lastUpdate;
 };
