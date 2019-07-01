@@ -59,24 +59,35 @@ void loop() {
     // If we synced the time and we have a valid timezone
     if (Time.isValid() && timezone.isValid()){
 
-    	Log.info("[%s] The current time is: %s", Time.format(TIME_FORMAT_ISO8601_FULL).c_str(), Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
+    	Log.info("[%s] The current time is: %s",
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str(),
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
 
-		Log.info("[%s] Raw UTC offset: %.1f", Time.format(TIME_FORMAT_ISO8601_FULL).c_str(), timezone.rawOffset);
-    	Log.info("[%s] Daylight savings time offset: %.1f", Time.format(TIME_FORMAT_ISO8601_FULL).c_str(), timezone.dstOffset);
+		Log.info("[%s] Raw UTC offset: %.1f",
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str(),
+            timezone.rawOffset);
+    	Log.info("[%s] Daylight savings time offset: %.1f",
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str(),
+            timezone.dstOffset);
 
     	if (Time.isDST())
-    		Log.info("[%s] DST is in effect!", Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
+    		Log.info("[%s] DST is in effect!",
+                Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
     	else
-    		Log.info("[%s] DST is not in effect.", Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
+    		Log.info("[%s] DST is not in effect.",
+                Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
 
-	    Log.info("[%s] UTC offset: %.1f", Time.format(TIME_FORMAT_ISO8601_FULL).c_str(), timezone.utcOffset); //rawOffset + dstOffset
+	    Log.info("[%s] UTC offset: %.1f",
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str(),
+            timezone.utcOffset); //rawOffset + dstOffset
 	    Log.info("------------------------------");
 
         done = true; // we're done here
 
     } else {
 
-    	Log.info("[%s] Waiting for time fix or timezone update...", Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
+    	Log.info("[%s] Waiting for time fix or timezone update...",
+            Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
         Log.info("------------------------------");
     }
 
