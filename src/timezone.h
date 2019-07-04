@@ -61,6 +61,8 @@ protected:
   const char *scanWifiNetworks();
   void subscriptionHandler(const char *event, const char *data);
 
+  static const unsigned long REQUEST_TIMEOUT = 300000; // 5 min request timeout
+
   bool timezoneSet;
   String eventName;
   unsigned long lastRequest;

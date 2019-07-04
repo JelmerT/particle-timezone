@@ -63,7 +63,9 @@ bool Timezone::requestDone()
  */
 bool Timezone::requestPending()
 {
-	return (Particle.connected() && (this->lastUpdate < this->lastRequest));
+	return (Particle.connected() && // pending if connected
+		(this->lastUpdate < this->lastRequest) && // pending if no update
+		((this->lastRequest + REQUEST_TIMEOUT) > millis())); //check timeout
 }
 
 /**
@@ -155,9 +157,9 @@ void Timezone::subscriptionHandler(const char *event, const char *data) {
 	int dstOffsetValue, rawOffsetValue = 0;
 	String dataString = "";
 
-	Log.info("Timezone received");
-  	// Log.info(event);
-  	// Log.info(data);
+	Log.trace("Timezone received");
+  	// Log.trace(event);
+  	// Log.trace(data);
 
 	jsonParser.clear();
 	jsonParser.addString(data);
@@ -171,18 +173,18 @@ void Timezone::subscriptionHandler(const char *event, const char *data) {
 			Log.info("Webhook and server are working!");
 	}
 	if (jsonParser.getOuterValueByKey("rawOffset", rawOffsetValue)) {
-		Log.info("parsed rawOffset in sec: %d", rawOffsetValue);
+		Log.trace("parsed rawOffset in sec: %d", rawOffsetValue);
 		this->rawOffset = float(rawOffsetValue/3600);
 	}
 	if (jsonParser.getOuterValueByKey("dstOffset", dstOffsetValue)) {
-		Log.info("parsed dstOffset in sec: %d", dstOffsetValue);
+		Log.trace("parsed dstOffset in sec: %d", dstOffsetValue);
 		this->dstOffset = float(dstOffsetValue/3600);
 	}
 
 	this->utcOffset = (this->rawOffset + this->dstOffset);
 
-  	// Log.info("Got new UTC offset: %d", this->utcOffset);
-  	// Log.info("Got new DST offset: %d", this->dstOffset);
+  	Log.trace("Got new UTC offset: %d", this->utcOffset);
+  	Log.trace("Got new DST offset: %d", this->dstOffset);
 
   	Time.zone(this->rawOffset);
 	Time.setDSTOffset(this->dstOffset);
@@ -195,6 +197,6 @@ void Timezone::subscriptionHandler(const char *event, const char *data) {
   	this->timezoneSet = true;
   	this->lastUpdate = millis();
 
-  	Log.info("UTC offset: %.1f", this->utcOffset);
+  	Log.info("Timezone received: UTC offset: %.1f", this->utcOffset);
 
 }

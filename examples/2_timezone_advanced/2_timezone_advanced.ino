@@ -46,7 +46,8 @@ void loop() {
             timezone.requestedLast());
     }
 
-    if (timezone.requestDone() && !timezone.isValid())
+    if ((timezone.requestDone() && !timezone.isValid()) ||
+        (!timezone.requestPending() && !timezone.isValid()))
     {
         Log.info("[%s] Something went wrong with last request!",
             Time.format(TIME_FORMAT_ISO8601_FULL).c_str());
