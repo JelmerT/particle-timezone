@@ -1,6 +1,6 @@
 // Example usage for timezone library by Jelmer Tiete<jelmer@tiete.be>.
 
-#include "timezone.h"
+#include "particle-timezone.h"
 
 SerialLogHandler logHandler;
 

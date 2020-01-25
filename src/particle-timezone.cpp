@@ -1,7 +1,7 @@
 /* Particle-timezone library by Jelmer Tiete<jelmer@tiete.be>
  */
 
-#include "timezone.h"
+#include "particle-timezone.h"
 #include "JsonParserGeneratorRK.h"
 
 static char requestBuf[256];
